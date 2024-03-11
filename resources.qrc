@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>res/app-icon.png</file>
+    <file>VERSION</file>
+    <file>LICENSE</file>
+</qresource>
+</RCC>
