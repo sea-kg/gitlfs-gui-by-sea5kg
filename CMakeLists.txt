@@ -28,6 +28,7 @@ list (APPEND WSJCPP_INCLUDE_DIRS "src/interfaces")
 
 # main
 list (APPEND WSJCPP_SOURCES "src/main.cpp")
+list (APPEND WSJCPP_SOURCES "src/app_config.cpp")
 list (APPEND WSJCPP_SOURCES "src/mainwindow.cpp")
 
 include_directories(${WSJCPP_INCLUDE_DIRS})

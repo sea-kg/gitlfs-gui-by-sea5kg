@@ -228,236 +228,236 @@ void MainWindow::btnScanDirectory() {
 }
 
 void MainWindow::initDirectoryTabs() {
-    m_pDirectoryWidget = new QWidget();
-    QVBoxLayout *pDirectoryLayout = new QVBoxLayout(m_pDirectoryWidget);
+  m_pDirectoryWidget = new QWidget();
+  QVBoxLayout *pDirectoryLayout = new QVBoxLayout(m_pDirectoryWidget);
+
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel(tr("Project:"));
+    pLabel->setMinimumWidth(100);
+    pLabel->setMaximumWidth(100);
+    pHLayout->addWidget(pLabel);
+
+    m_pComboBoxProjectSelect = new QComboBox();
+    m_pComboBoxProjectSelect->addItem("-");
 
     {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel(tr("Project:"));
-        pLabel->setMinimumWidth(100);
-        pLabel->setMaximumWidth(100);
-        pHLayout->addWidget(pLabel);
-
-        m_pComboBoxProjectSelect = new QComboBox();
-        m_pComboBoxProjectSelect->addItem("-");
-
-        {
-            // Detection *pDetection = new Detection();
-            // QStringList ft;
-            // pDetection->types(ft);
-            // for (int i = 0; i < ft.size(); i++) {
-            //     m_pComboBox->addItem(ft.at(i));
-            // }
-        }
-        pHLayout->addWidget(m_pComboBoxProjectSelect);
-
-        m_pButtonCloneProject = new QPushButton(tr("Clone project"));
-        connect(m_pButtonCloneProject, SIGNAL(clicked()), this, SLOT(btnCloneProject()));
-        pHLayout->addWidget(m_pButtonCloneProject);
-
-        m_pButtonAddExisting = new QPushButton(tr("Add existing"));
-        connect(m_pButtonAddExisting, SIGNAL(clicked()), this, SLOT(btnAddExisting()));
-        pHLayout->addWidget(m_pButtonAddExisting);
-
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pDirectoryLayout->addWidget(pWidget);
+        // Detection *pDetection = new Detection();
+        // QStringList ft;
+        // pDetection->types(ft);
+        // for (int i = 0; i < ft.size(); i++) {
+        //     m_pComboBox->addItem(ft.at(i));
+        // }
     }
-    // m_pTableView_Directories = new QTableView();
+    pHLayout->addWidget(m_pComboBoxProjectSelect);
 
-     // = new QComboBox(pDirectoryLayout);
+    m_pButtonCloneProject = new QPushButton(tr("Clone project"));
+    connect(m_pButtonCloneProject, SIGNAL(clicked()), this, SLOT(btnCloneProject()));
+    pHLayout->addWidget(m_pButtonCloneProject);
 
-    // m_pDirectoryModel = new DirectoryModel(m_pDB);
-    // m_pTableView_Directories->setModel( m_pDirectoryModel );
-    // m_pTableView_Directories->setColumnWidth(0, 280);
-    // m_pTableView_Directories->setColumnWidth(1, 160);
-    // {
-    //     QHBoxLayout *pHLayout = new QHBoxLayout();
-    //     QPushButton *pBtnInsertDirectory = new QPushButton("Insert");
-    //     pBtnInsertDirectory->setMaximumWidth(100);
-    //     connect(pBtnInsertDirectory, SIGNAL(clicked()), this, SLOT(btnInsertDirectory()));
-    //     pHLayout->addWidget(pBtnInsertDirectory);
+    m_pButtonAddExisting = new QPushButton(tr("Add existing"));
+    connect(m_pButtonAddExisting, SIGNAL(clicked()), this, SLOT(btnAddExisting()));
+    pHLayout->addWidget(m_pButtonAddExisting);
 
-    //     QPushButton *pBtnScanDirectory = new QPushButton("Scan");
-    //     pBtnScanDirectory->setMaximumWidth(100);
-    //     connect(pBtnScanDirectory, SIGNAL(clicked()), this, SLOT(btnScanDirectory()));
-    //     pHLayout->addWidget(pBtnScanDirectory);
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pDirectoryLayout->addWidget(pWidget);
+  }
+  // m_pTableView_Directories = new QTableView();
 
-    //     // empty space
-    //     pHLayout->addWidget(new QWidget);
+    // = new QComboBox(pDirectoryLayout);
 
-    //     QWidget *pWidget = new QWidget;
-    //     pWidget->setLayout(pHLayout);
-    //     pDirectoryLayout->addWidget(pWidget);
-    // }
-    // pDirectoryLayout->addWidget(m_pTableView_Directories);
-    // m_pDirectoryWidget->setLayout(pDirectoryLayout);
+  // m_pDirectoryModel = new DirectoryModel(m_pDB);
+  // m_pTableView_Directories->setModel( m_pDirectoryModel );
+  // m_pTableView_Directories->setColumnWidth(0, 280);
+  // m_pTableView_Directories->setColumnWidth(1, 160);
+  // {
+  //     QHBoxLayout *pHLayout = new QHBoxLayout();
+  //     QPushButton *pBtnInsertDirectory = new QPushButton("Insert");
+  //     pBtnInsertDirectory->setMaximumWidth(100);
+  //     connect(pBtnInsertDirectory, SIGNAL(clicked()), this, SLOT(btnInsertDirectory()));
+  //     pHLayout->addWidget(pBtnInsertDirectory);
+
+  //     QPushButton *pBtnScanDirectory = new QPushButton("Scan");
+  //     pBtnScanDirectory->setMaximumWidth(100);
+  //     connect(pBtnScanDirectory, SIGNAL(clicked()), this, SLOT(btnScanDirectory()));
+  //     pHLayout->addWidget(pBtnScanDirectory);
+
+  //     // empty space
+  //     pHLayout->addWidget(new QWidget);
+
+  //     QWidget *pWidget = new QWidget;
+  //     pWidget->setLayout(pHLayout);
+  //     pDirectoryLayout->addWidget(pWidget);
+  // }
+  // pDirectoryLayout->addWidget(m_pTableView_Directories);
+  // m_pDirectoryWidget->setLayout(pDirectoryLayout);
 }
 
 // ---------------------------------------------------------------------
 
 void MainWindow::initFilesTabs() {
-    m_pFilesWidget = new QWidget();
-    QVBoxLayout *pFilesLayout = new QVBoxLayout(m_pFilesWidget);
-    int nMinimumWidth = 100;
+  m_pFilesWidget = new QWidget();
+  QVBoxLayout *pFilesLayout = new QVBoxLayout(m_pFilesWidget);
+  int nMinimumWidth = 100;
 
-    // name like
+  // name like
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Name LIKE ");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
+
+    m_pLineEditNameLike = new QLineEdit();
+    connect(m_pLineEditNameLike, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(m_pLineEditNameLike);
+
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
+
+  // ext
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Ext = ");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pLabel->setMaximumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
+
+    m_pLineEditExt = new QLineEdit();
+    m_pLineEditExt->setMinimumWidth(100);
+    m_pLineEditExt->setMaximumWidth(100);
+    connect(m_pLineEditExt, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(m_pLineEditExt);
+
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
+
+  // type file
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Type = ");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pLabel->setMaximumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
+
+    m_pComboBox = new QComboBox();
+    m_pComboBox->addItem("*");
+
     {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Name LIKE ");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
-
-        m_pLineEditNameLike = new QLineEdit();
-        connect(m_pLineEditNameLike, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(m_pLineEditNameLike);
-
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
+      // Detection *pDetection = new Detection();
+      // QStringList ft;
+      // pDetection->types(ft);
+      // for (int i = 0; i < ft.size(); i++) {
+      //     m_pComboBox->addItem(ft.at(i));
+      // }
     }
-    
-    // ext
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Ext = ");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pLabel->setMaximumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
+    pHLayout->addWidget(m_pComboBox);
 
-        m_pLineEditExt = new QLineEdit();
-        m_pLineEditExt->setMinimumWidth(100);
-        m_pLineEditExt->setMaximumWidth(100);
-        connect(m_pLineEditExt, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(m_pLineEditExt);
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
 
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
+  // size
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Size");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pLabel->setMaximumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
 
-    // type file
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Type = ");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pLabel->setMaximumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
+    m_pComboBoxSize = new QComboBox();
+    m_pComboBoxSize->setMinimumWidth(50);
+    m_pComboBoxSize->setMaximumWidth(50);
+    m_pComboBoxSize->addItem("");
+    m_pComboBoxSize->addItem(">");
+    m_pComboBoxSize->addItem("<");
+    m_pComboBoxSize->addItem("=");
+    pHLayout->addWidget(m_pComboBoxSize);
 
-        m_pComboBox = new QComboBox();
-        m_pComboBox->addItem("*");
-        
-        {
-            // Detection *pDetection = new Detection();
-            // QStringList ft;
-            // pDetection->types(ft);
-            // for (int i = 0; i < ft.size(); i++) {
-            //     m_pComboBox->addItem(ft.at(i));
-            // }
-        }
-        pHLayout->addWidget(m_pComboBox);
+    m_pLineEditSize = new QLineEdit();
+    m_pLineEditSize->setMinimumWidth(50);
+    m_pLineEditSize->setMaximumWidth(50);
+    connect(m_pLineEditSize, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(m_pLineEditSize);
 
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
 
-    // size
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Size");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pLabel->setMaximumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
+  // path like
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Path LIKE ");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
 
-        m_pComboBoxSize = new QComboBox();
-        m_pComboBoxSize->setMinimumWidth(50);
-        m_pComboBoxSize->setMaximumWidth(50);
-        m_pComboBoxSize->addItem("");
-        m_pComboBoxSize->addItem(">");
-        m_pComboBoxSize->addItem("<");
-        m_pComboBoxSize->addItem("=");
-        pHLayout->addWidget(m_pComboBoxSize);
+    m_pLineEditPathLike = new QLineEdit();
+    connect(m_pLineEditPathLike, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(m_pLineEditPathLike);
 
-        m_pLineEditSize = new QLineEdit();
-        m_pLineEditSize->setMinimumWidth(50);
-        m_pLineEditSize->setMaximumWidth(50);
-        connect(m_pLineEditSize, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(m_pLineEditSize);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
 
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
-    
-    // path like
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Path LIKE ");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
+  // Comment
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QLabel *pLabel = new QLabel("Comment LIKE ");
+    pLabel->setMinimumWidth(nMinimumWidth);
+    pLabel->setMaximumWidth(nMinimumWidth);
+    pHLayout->addWidget(pLabel);
 
-        m_pLineEditPathLike = new QLineEdit();
-        connect(m_pLineEditPathLike, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(m_pLineEditPathLike);
+    m_pLineEditComment = new QLineEdit();
+    connect(m_pLineEditComment, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(m_pLineEditComment);
 
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
 
-    // Comment
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QLabel *pLabel = new QLabel("Comment LIKE ");
-        pLabel->setMinimumWidth(nMinimumWidth);
-        pLabel->setMaximumWidth(nMinimumWidth);
-        pHLayout->addWidget(pLabel);
+  // search button
+  {
+    QHBoxLayout *pHLayout = new QHBoxLayout();
+    QPushButton *pBtnSearch = new QPushButton("Search...");
+    pBtnSearch->setMaximumWidth(100);
+    connect(pBtnSearch, SIGNAL(clicked()), this, SLOT(btnFilesSearch()));
+    pHLayout->addWidget(pBtnSearch);
 
-        m_pLineEditComment = new QLineEdit();
-        connect(m_pLineEditComment, SIGNAL(returnPressed()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(m_pLineEditComment);
+    pHLayout->addWidget(new QWidget);
+    QWidget *pWidget = new QWidget;
+    pWidget->setLayout(pHLayout);
+    pFilesLayout->addWidget(pWidget);
+  }
 
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
+  m_pTableView_Files = new QTableView();
+  // m_pFilesModel = new QSqlQueryModel;
+  // // m_pFilesModel->setQuery("SELECT name, ext, type, size, path, comment, md5, lastscanning  FROM files");
+  // m_pFilesModel->setQuery("SELECT name, ext, type, size, path, lastscanning  FROM files");
+  // m_pFilesModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
+  // m_pFilesModel->setHeaderData(1, Qt::Horizontal, tr("Ext"));
+  // m_pFilesModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
+  // m_pFilesModel->setHeaderData(3, Qt::Horizontal, tr("Size (In Bytes)"));
+  // m_pFilesModel->setHeaderData(4, Qt::Horizontal, tr("Path"));
+  // // m_pFilesModel->setHeaderData(5, Qt::Horizontal, tr("Comment"));
+  // // m_pFilesModel->setHeaderData(6, Qt::Horizontal, tr("md5sum"));
+  // m_pFilesModel->setHeaderData(7, Qt::Horizontal, tr("Last Scanning"));
 
-    // search button
-    {
-        QHBoxLayout *pHLayout = new QHBoxLayout();
-        QPushButton *pBtnSearch = new QPushButton("Search...");
-        pBtnSearch->setMaximumWidth(100);
-        connect(pBtnSearch, SIGNAL(clicked()), this, SLOT(btnFilesSearch()));
-        pHLayout->addWidget(pBtnSearch);
-
-        pHLayout->addWidget(new QWidget);
-        QWidget *pWidget = new QWidget;
-        pWidget->setLayout(pHLayout);
-        pFilesLayout->addWidget(pWidget);
-    }
-
-    m_pTableView_Files = new QTableView();
-    // m_pFilesModel = new QSqlQueryModel;
-    // // m_pFilesModel->setQuery("SELECT name, ext, type, size, path, comment, md5, lastscanning  FROM files");
-    // m_pFilesModel->setQuery("SELECT name, ext, type, size, path, lastscanning  FROM files");
-    // m_pFilesModel->setHeaderData(0, Qt::Horizontal, tr("Name"));
-    // m_pFilesModel->setHeaderData(1, Qt::Horizontal, tr("Ext"));
-    // m_pFilesModel->setHeaderData(2, Qt::Horizontal, tr("Type"));
-    // m_pFilesModel->setHeaderData(3, Qt::Horizontal, tr("Size (In Bytes)"));
-    // m_pFilesModel->setHeaderData(4, Qt::Horizontal, tr("Path"));
-    // // m_pFilesModel->setHeaderData(5, Qt::Horizontal, tr("Comment"));
-    // // m_pFilesModel->setHeaderData(6, Qt::Horizontal, tr("md5sum"));
-    // m_pFilesModel->setHeaderData(7, Qt::Horizontal, tr("Last Scanning"));
-
-    // m_pTableView_Files->setModel( m_pFilesModel );
-    pFilesLayout->addWidget(m_pTableView_Files);
-    m_pFilesWidget->setLayout(pFilesLayout);
+  // m_pTableView_Files->setModel( m_pFilesModel );
+  pFilesLayout->addWidget(m_pTableView_Files);
+  m_pFilesWidget->setLayout(pFilesLayout);
 }
 
 // ---------------------------------------------------------------------
