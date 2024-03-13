@@ -145,46 +145,9 @@ void MainWindow::actionAbout() {
     msgBox.exec();
 }
 
-// ---------------------------------------------------------------------
-
 void MainWindow::btnInsertDirectory() {
-     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-         "/home",
-         QFileDialog::ShowDirsOnly
-         | QFileDialog::DontResolveSymlinks);
 
-    if (!dir.isEmpty()) {
-        // check
-        {
-            // QSqlQuery query(*m_pDB);
-            // query.prepare("SELECT count(*) as cnt FROM directories WHERE path = :path");
-            // query.bindValue(":path", dir);
-            // query.exec();
-            // int nResult = 0;
-            // if (query.next()) {
-            //     nResult = query.value(0).toInt();
-            // }
-
-            // if (nResult >= 1) {
-            //     QMessageBox msgBox;
-            //     msgBox.setText("This directory already exists");
-            //     msgBox.exec();
-            //     return;
-            // }
-        }
-
-        // insert
-        {
-            // QSqlQuery query(*m_pDB);
-            // query.prepare("INSERT INTO directories(path) VALUES(:path)");
-            // query.bindValue(":path", dir);
-            // query.exec();
-            // m_pDirectoryModel->needReset();
-        }
-    }
 }
-
-
 
 void MainWindow::btnCloneProject() {
   std::cout << "btnCloneProject" << "\n";
@@ -192,6 +155,40 @@ void MainWindow::btnCloneProject() {
 
 void MainWindow::btnAddExisting() {
   std::cout << "btnAddExisting" << "\n";
+  QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    "/home",
+    QFileDialog::ShowDirsOnly
+    | QFileDialog::DontResolveSymlinks
+  );
+
+  if (!dir.isEmpty()) {
+    // check
+    {
+      // QSqlQuery query(*m_pDB);
+      // query.prepare("SELECT count(*) as cnt FROM directories WHERE path = :path");
+      // query.bindValue(":path", dir);
+      // query.exec();
+      // int nResult = 0;
+      // if (query.next()) {
+      //     nResult = query.value(0).toInt();
+      // }
+      // if (nResult >= 1) {
+      //     QMessageBox msgBox;
+      //     msgBox.setText("This directory already exists");
+      //     msgBox.exec();
+      //     return;
+      // }
+    }
+
+    // insert
+    {
+      // QSqlQuery query(*m_pDB);
+      // query.prepare("INSERT INTO directories(path) VALUES(:path)");
+      // query.bindValue(":path", dir);
+      // query.exec();
+      // m_pDirectoryModel->needReset();
+    }
+  }
 }
 
 void MainWindow::btnScanDirectory() {

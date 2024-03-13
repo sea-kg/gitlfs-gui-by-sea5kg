@@ -1,5 +1,4 @@
-#ifndef MAIN_WIDGET_H
-#define MAIN_WIDGET_H
+#pragma once
 
 #include <QWidget>
 #include <QTabWidget>
@@ -102,6 +101,3 @@ class MainWindow : public QMainWindow, public INotifyService {
         void btnScanDirectory();
         void btnFilesSearch();
 };
-
-#endif // MAIN_WIDGET_H
-
