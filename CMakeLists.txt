@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(GitLfsGuiBySea5kg LANGUAGES CXX)
+project(gitlfs-gui-by-sea5kg LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
@@ -16,7 +16,7 @@ set(CMAKE_AUTORCC TRUE)
 
 
 
-set(EXECUTABLE_OUTPUT_PATH ${GitLfsGuiBySea5kg_SOURCE_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${gitlfs-gui-by-sea5kg_SOURCE_DIR})
 set(QTCORE_LIBRARIES ${Qt5Core_LIBRARIES})
 include_directories(${Qt5Core_INCLUDE_DIRS})
 
@@ -34,14 +34,14 @@ include_directories(${WSJCPP_INCLUDE_DIRS})
 
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
 
-add_executable (GitLfsGuiBySea5kg ${WSJCPP_SOURCES} resources.qrc)
+add_executable (gitlfs-gui-by-sea5kg ${WSJCPP_SOURCES} resources.qrc)
 
-qt5_use_modules(GitLfsGuiBySea5kg Core Gui Widgets)
-target_link_libraries(GitLfsGuiBySea5kg ${WSJCPP_LIBRARIES} )
+qt5_use_modules(gitlfs-gui-by-sea5kg Core Gui Widgets)
+target_link_libraries(gitlfs-gui-by-sea5kg ${WSJCPP_LIBRARIES} )
 
 install(
     TARGETS
-        GitLfsGuiBySea5kg
+        gitlfs-gui-by-sea5kg
     RUNTIME DESTINATION
         ${CMAKE_INSTALL_PREFIX}/bin
 )

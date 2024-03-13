@@ -34,10 +34,14 @@ class MainWindow : public QMainWindow, public INotifyService {
 
         QTabWidget *m_pTabWidget;
         QVBoxLayout *m_pMainLayout;
-        QMenu *m_pMenuFile;
 
+        // menu and actions
+        QMenu *m_pMenuFile;
+        QAction *m_pActionCloneProject;
+        QAction *m_pActionAddExistingProject;
         QMenu *m_pMenuHelp;
         QAction *m_pActionAbout;
+
 
         QWidget *m_pDirectoryWidget;
         QTableView *m_pTableView_Directories;
@@ -46,6 +50,11 @@ class MainWindow : public QMainWindow, public INotifyService {
         QWidget *m_pFilesWidget;
         QTableView *m_pTableView_Files;
         // QSqlQueryModel *m_pFilesModel;
+
+        // project directory
+        QComboBox *m_pComboBoxProjectSelect;
+        QPushButton *m_pButtonCloneProject;
+        QPushButton *m_pButtonAddExisting;
 
         // filters
         QLineEdit *m_pLineEditNameLike;
@@ -86,8 +95,10 @@ class MainWindow : public QMainWindow, public INotifyService {
 
     private slots:
         void actionAbout();
+        void btnCloneProject();
+        void btnAddExisting();
+
         void btnInsertDirectory();
-        void btnRemoveDirectory();
         void btnScanDirectory();
         void btnFilesSearch();
 };

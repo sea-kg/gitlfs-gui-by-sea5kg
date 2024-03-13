@@ -13,85 +13,80 @@
 // #include "detection/detection.h"
 // #include "scandialog.h"
 
-MainWindow::MainWindow(QString sWorkDirectory) :
- m_appIcon(QIcon(":/res/app-icon.png")) {
-    m_pTrayIcon = new QSystemTrayIcon(this);
+MainWindow::MainWindow(QString sWorkDirectory) : m_appIcon(QIcon(":/res/app-icon.png")) {
+  m_pTrayIcon = new QSystemTrayIcon(this);
 
-    // Read version
-    QFile fileVersion(":/VERSION");
-    if (fileVersion.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream stream(&fileVersion);
-        while (!stream.atEnd()) {
-            m_sVersionApp.append(stream.readLine()+"\n");
-        }
-    }
-    fileVersion.close();
-    m_sVersionApp = m_sVersionApp.trimmed();
+  // Read version
+  QFile fileVersion(":/VERSION");
+  if (fileVersion.open(QIODevice::ReadOnly | QIODevice::Text)) {
+      QTextStream stream(&fileVersion);
+      while (!stream.atEnd()) {
+          m_sVersionApp.append(stream.readLine()+"\n");
+      }
+  }
+  fileVersion.close();
+  m_sVersionApp = m_sVersionApp.trimmed();
 
-    m_sWorkDirectory = sWorkDirectory;
-    setWindowTitle("GitLfs GUI by sea5kg (" + m_sVersionApp + ")");
-    setMinimumSize(1000, 600);
-    setWindowIcon(m_appIcon);
-    initActions();
+  m_sWorkDirectory = sWorkDirectory;
+  setWindowTitle("GitLfs GUI by sea5kg (" + m_sVersionApp + ")");
+  setMinimumSize(1000, 600);
+  setWindowIcon(m_appIcon);
+  initActions();
 
-    // Tray icon menu
-    initTrayIcon();
+  // Tray icon menu
+  initTrayIcon();
 
-    // menu
-    {
-        m_pMenuFile = menuBar()->addMenu("&File");
-        m_pMenuHelp = menuBar()->addMenu("&Help");
-        m_pMenuHelp->addAction(m_pActionAbout);
-    }
+  // menu
+  {
+    m_pMenuFile = menuBar()->addMenu("&File");
+    m_pMenuFile->addAction(m_pActionCloneProject);
+    m_pMenuFile->addAction(m_pActionAddExistingProject);
+    m_pMenuHelp = menuBar()->addMenu("&Help");
+    m_pMenuHelp->addAction(m_pActionAbout);
+  }
 
-    m_pTabWidget = new QTabWidget();
+  m_pTabWidget = new QTabWidget();
 
-    // directory tabs
-    initDirectoryTabs();
-    m_pTabWidget->addTab(m_pDirectoryWidget, "Directory for scanning...");
-    
-    // files tab
-    initFilesTabs();
-    m_pTabWidget->addTab(m_pFilesWidget, "Files");
+  // directory tabs
+  initDirectoryTabs();
+  m_pTabWidget->addTab(m_pDirectoryWidget, "Project");
 
-    // jobs
-    initJobsTabs();
-    m_pTabWidget->addTab(m_pJobsWidget, "Jobs");
+  // files tab
+  initFilesTabs();
+  m_pTabWidget->addTab(m_pFilesWidget, "Files");
 
-    // Main Layout
-    m_pMainLayout = new QVBoxLayout();
-    m_pMainLayout->addWidget(m_pTabWidget);
-    
-    setCentralWidget(m_pTabWidget);
+  // jobs
+  initJobsTabs();
+  m_pTabWidget->addTab(m_pJobsWidget, "Jobs");
+
+  // Main Layout
+  m_pMainLayout = new QVBoxLayout();
+  m_pMainLayout->addWidget(m_pTabWidget);
+
+  setCentralWidget(m_pTabWidget);
 }
-
-// ---------------------------------------------------------------------
 
 void MainWindow::showSystemMessage(QString sTitle, QString sMessage) {
-    this->m_pTrayIcon->showMessage(sTitle, sMessage);
+  this->m_pTrayIcon->showMessage(sTitle, sMessage);
 }
-
-// ---------------------------------------------------------------------
 
 void MainWindow::initTrayIcon() {
-    // App can exit via Quit menu
-    QAction *pQuitAction = new QAction("&Quit", this);
-    connect(pQuitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+  // App can exit via Quit menu
+  QAction *pQuitAction = new QAction("&Quit", this);
+  connect(pQuitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-    QMenu *pMenu = new QMenu(this);
-    pMenu->addAction(pQuitAction);
+  QMenu *pMenu = new QMenu(this);
+  pMenu->addAction(pQuitAction);
 
-    this->m_pTrayIcon->setIcon(m_appIcon);
-    this->m_pTrayIcon->setContextMenu(pMenu);
+  this->m_pTrayIcon->setIcon(m_appIcon);
+  this->m_pTrayIcon->setContextMenu(pMenu);
 
-    // Displaying the tray icon
-    this->m_pTrayIcon->show();
+  // Displaying the tray icon
+  this->m_pTrayIcon->show();
 
-    // Interaction
-    connect(m_pTrayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+  // Interaction
+  connect(m_pTrayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
 }
-
-// ---------------------------------------------------------------------
 
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_) {
   switch (reason_) {
@@ -103,41 +98,44 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_) {
   }
 }
 
-// ---------------------------------------------------------------------
+void MainWindow::initActions() {
+  m_pActionAbout = new QAction(tr("&About"), this);
+  m_pActionAbout->setStatusTip(tr("About"));
+  connect(m_pActionAbout, SIGNAL(triggered()), this, SLOT(actionAbout()));
 
-void MainWindow::initActions(){
-    m_pActionAbout = new QAction(tr("&About"), this);
-    // newAct->setShortcuts(QKeySequence::New);
-    m_pActionAbout->setStatusTip("About");
-    connect(m_pActionAbout, SIGNAL(triggered()), this, SLOT(actionAbout()));
+  m_pActionCloneProject = new QAction(tr("&Clone Project"), this);
+  // newAct->setShortcuts(QKeySequence::New);
+  m_pActionCloneProject->setStatusTip(tr("Clone Project"));
+  connect(m_pActionCloneProject, SIGNAL(triggered()), this, SLOT(btnCloneProject()));
 
+  m_pActionAddExistingProject = new QAction(tr("&Add Existing Project"), this);
+  m_pActionAddExistingProject->setStatusTip(tr("Add Existing Project"));
+  connect(m_pActionAddExistingProject, SIGNAL(triggered()), this, SLOT(btnAddExisting()));
 }
 
-// ---------------------------------------------------------------------
-
 void MainWindow::actionAbout() {
-    // Read license
-    QFile fileLicense(":/LICENSE");
-    QString sFileLicenseContent;
-    if (fileLicense.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream stream(&fileLicense);
-        while (!stream.atEnd()) {
-            sFileLicenseContent.append(stream.readLine()+"\n");
-        }
+  // Read license
+  QFile fileLicense(":/LICENSE");
+  QString sFileLicenseContent;
+  if (fileLicense.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QTextStream stream(&fileLicense);
+    while (!stream.atEnd()) {
+      sFileLicenseContent.append(stream.readLine()+"\n");
     }
-    fileLicense.close();
-    sFileLicenseContent.replace("\n","<br>");
+  }
+  fileLicense.close();
+  sFileLicenseContent.replace("\n","<br>");
 
     // prepare and show dialog
     QMessageBox msgBox;
     msgBox.setStyleSheet("QLabel{min-width: 700px;}");
     msgBox.setModal( true );
-    msgBox.setWindowTitle("About");
+    msgBox.setWindowTitle(tr("About"));
     msgBox.setTextFormat(Qt::RichText);
     msgBox.setText(
         "<h2>GitLfs GUI by sea5kg</h2> <br>"
         "Version: " + m_sVersionApp + " <br>"
-        "Source-code: <a href='https://github.com/sea-kg/GitLfsGuiBySea5kg/'>https://github.com/sea-kg/GitLfsGuiBySea5kg/</a> <br>"
+        "Source-code: <a href='https://github.com/sea-kg/gitlfs-gui-by-sea5kg/'>https://github.com/sea-kg/gitlfs-gui-by-sea5kg/</a> <br>"
         "<hr/>"
         "Author(s):<ul>"
         "  <li>Evgenii Sopov (mrseakg@gmail.com) </li>"
@@ -166,7 +164,7 @@ void MainWindow::btnInsertDirectory() {
             // if (query.next()) {
             //     nResult = query.value(0).toInt();
             // }
-            
+
             // if (nResult >= 1) {
             //     QMessageBox msgBox;
             //     msgBox.setText("This directory already exists");
@@ -186,43 +184,15 @@ void MainWindow::btnInsertDirectory() {
     }
 }
 
-// ---------------------------------------------------------------------
 
-void MainWindow::btnRemoveDirectory() {
-    // Get all selections
-    QStringList listRemove;
-    QModelIndexList indexes = m_pTableView_Directories->selectionModel()->selection().indexes();
-    for (int i = 0; i < indexes.count(); ++i) {
-        QModelIndex index = indexes.at(i);
-        index = index.sibling(index.row(), 0);
-        if (!listRemove.contains(index.data().toString()))
-            listRemove << index.data().toString();
-    }
 
-    for (int i = 0; i < listRemove.size(); i++) {
-        QString sPath = listRemove.at(i);
-
-        // m_pJobsModel->terminateJob(sPath);
-        // // delete from dirs
-        // {
-        //     QSqlQuery query(*m_pDB);
-        //     query.prepare("DELETE FROM directories WHERE path = :path");
-        //     query.bindValue(":path", sPath);
-        //     query.exec();
-        // }
-
-        // // delete from files
-        // {
-        //     QSqlQuery query(*m_pDB);
-        //     query.prepare("DELETE FROM files WHERE path LIKE :path");
-        //     query.bindValue(":path", sPath + "%");
-        //     query.exec();
-        // }
-        // m_pDirectoryModel->needReset();
-    }
+void MainWindow::btnCloneProject() {
+  std::cout << "btnCloneProject" << "\n";
 }
 
-// ---------------------------------------------------------------------
+void MainWindow::btnAddExisting() {
+  std::cout << "btnAddExisting" << "\n";
+}
 
 void MainWindow::btnScanDirectory() {
 
@@ -263,7 +233,44 @@ void MainWindow::btnScanDirectory() {
 void MainWindow::initDirectoryTabs() {
     m_pDirectoryWidget = new QWidget();
     QVBoxLayout *pDirectoryLayout = new QVBoxLayout(m_pDirectoryWidget);
-    m_pTableView_Directories = new QTableView();
+
+    {
+        QHBoxLayout *pHLayout = new QHBoxLayout();
+        QLabel *pLabel = new QLabel(tr("Project:"));
+        pLabel->setMinimumWidth(100);
+        pLabel->setMaximumWidth(100);
+        pHLayout->addWidget(pLabel);
+
+        m_pComboBoxProjectSelect = new QComboBox();
+        m_pComboBoxProjectSelect->addItem("-");
+
+        {
+            // Detection *pDetection = new Detection();
+            // QStringList ft;
+            // pDetection->types(ft);
+            // for (int i = 0; i < ft.size(); i++) {
+            //     m_pComboBox->addItem(ft.at(i));
+            // }
+        }
+        pHLayout->addWidget(m_pComboBoxProjectSelect);
+
+        m_pButtonCloneProject = new QPushButton(tr("Clone project"));
+        connect(m_pButtonCloneProject, SIGNAL(clicked()), this, SLOT(btnCloneProject()));
+        pHLayout->addWidget(m_pButtonCloneProject);
+
+        m_pButtonAddExisting = new QPushButton(tr("Add existing"));
+        connect(m_pButtonAddExisting, SIGNAL(clicked()), this, SLOT(btnAddExisting()));
+        pHLayout->addWidget(m_pButtonAddExisting);
+
+        pHLayout->addWidget(new QWidget);
+        QWidget *pWidget = new QWidget;
+        pWidget->setLayout(pHLayout);
+        pDirectoryLayout->addWidget(pWidget);
+    }
+    // m_pTableView_Directories = new QTableView();
+
+     // = new QComboBox(pDirectoryLayout);
+
     // m_pDirectoryModel = new DirectoryModel(m_pDB);
     // m_pTableView_Directories->setModel( m_pDirectoryModel );
     // m_pTableView_Directories->setColumnWidth(0, 280);
@@ -275,16 +282,11 @@ void MainWindow::initDirectoryTabs() {
     //     connect(pBtnInsertDirectory, SIGNAL(clicked()), this, SLOT(btnInsertDirectory()));
     //     pHLayout->addWidget(pBtnInsertDirectory);
 
-    //     QPushButton *pBtnRemoveDirectory = new QPushButton("Remove");
-    //     pBtnRemoveDirectory->setMaximumWidth(100);
-    //     connect(pBtnRemoveDirectory, SIGNAL(clicked()), this, SLOT(btnRemoveDirectory()));
-    //     pHLayout->addWidget(pBtnRemoveDirectory);
-
     //     QPushButton *pBtnScanDirectory = new QPushButton("Scan");
     //     pBtnScanDirectory->setMaximumWidth(100);
     //     connect(pBtnScanDirectory, SIGNAL(clicked()), this, SLOT(btnScanDirectory()));
     //     pHLayout->addWidget(pBtnScanDirectory);
-        
+
     //     // empty space
     //     pHLayout->addWidget(new QWidget);
 
